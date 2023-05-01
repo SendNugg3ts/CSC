@@ -3,13 +3,14 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, LSTM
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
 #Dados
 dadosTreino = pd.read_csv("training_data.csv")
 dadosTeste = pd.read_csv("test_data.csv")
 dadosTreino["record_date"] = pd.to_datetime(dadosTreino["record_date"])
 dadosTreino = dadosTreino.sort_values(by='record_date', ascending=True)
-dadosTreino = dadosTreino["record_date"],[""]
+dadosTreino
 # Definir o modelo
 seq_length = 7 # number of days to use for prediction
 n_features = dadosTreino.shape[1] 
