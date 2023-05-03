@@ -5,6 +5,16 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
+from datacleaner import *
+bd = pd.read_csv(r"training_data.csv")
+
+def tratar_dados(bd):
+    RoadsCleaner(bd)
+    data(bd)
+    valores_em_falta(bd)
+    eliminar(bd)
+    return(bd)
+
 #Dados
 dadosTreino = pd.read_csv("training_data.csv")
 dadosTeste = pd.read_csv("test_data.csv")

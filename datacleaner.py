@@ -55,4 +55,5 @@ def eliminar(bd):
     bd.pop("city_name")
     bd.pop("avg_precipitation")
     bd.pop("affected_roads")
+    bd.pop("record_date")
     return bd
