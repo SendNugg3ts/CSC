@@ -32,7 +32,6 @@ def RoadsCleaner(bd):
     bd["Estrada Regional"] = Regional
     bd["IC"] = IC
     bd ["Estrada Municipal"] = Municipal
-    bd.pop("affected_roads")
     return bd
 
 def data(bd):
@@ -55,4 +54,5 @@ def valores_em_falta(bd):
 def eliminar(bd):
     bd.pop("city_name")
     bd.pop("avg_precipitation")
+    bd.pop("affected_roads")
     return bd
