@@ -1,7 +1,8 @@
 import string
 import pandas as pd
+import datetime
 
-bd = pd.read_csv('training_data.csv')
+bd = pd.read_csv(r"training_data.csv")
 
 
 def RoadsCleaner(bd):
@@ -31,5 +32,27 @@ def RoadsCleaner(bd):
     bd["Estrada Regional"] = Regional
     bd["IC"] = IC
     bd ["Estrada Municipal"] = Municipal
-    bd.drop("affected_roads")
+    bd.pop("affected_roads")
+    return bd
+
+def data(bd):
+    data=[]
+    hora=[]
+    for i in bd['record_date']:
+        data_e_hora=datetime.datetime.strptime(i, '%Y-%m-%d %H:%M')
+        data.append(data_e_hora.date())
+        hora.append(data_e_hora.time())
+    bd["data"] = data
+    bd["hora"]=hora
+    return(bd)
+
+def valores_em_falta(bd):
+    for i in range(len(bd)):
+        if bd['magnitude_of_delay'][i] == 'UNDEFINED':
+            bd['magnitude_of_delay'][i] = None
+    return(bd)
+
+def eliminar(bd):
+    bd.pop("city_name")
+    bd.pop("avg_precipitation")
     return bd
