@@ -57,3 +57,20 @@ def eliminar(bd):
     bd.pop("affected_roads")
     bd.pop("record_date")
     return bd
+
+
+def incidentsNumbers(bd):
+    bd["incidents"]= bd["incidents"].replace(["None","Low","Medium","High","Very_High"],[0,1,2,3,4])
+    return bd
+
+def luminosidade(bd):
+    bd["luminosity"] = bd["luminosity"].replace(["LIGHT","DARK"],[0,1])
+    return bd 
+
+def rainNumbers(bd):
+    bd["avg_rain"]= bd["avg_rain"].replace(["Sem Chuva","chuva moderada","chuva fraca","chuva forte"],[0,1,2,3])
+    return bd
+
+def delayNumbers(bd):
+    bd["magnitude_of_delay"] = bd["magnitude_of_delay"].fillna("None").replace(["None","MODERATE","MAJOR"],[0,1,2])
+    return bd

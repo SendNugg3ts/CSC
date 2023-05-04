@@ -9,21 +9,24 @@ from datacleaner import *
 bd = pd.read_csv(r"training_data.csv")
 
 def tratar_dados(bd):
-    RoadsCleaner(bd)
-    data(bd)
-    valores_em_falta(bd)
-    eliminar(bd)
-    return(bd)
+    bd = RoadsCleaner(bd)
+    bd = data(bd)
+    bd = valores_em_falta(bd)
+    bd = eliminar(bd)
+    bd = incidentsNumbers(bd)
+    bd = luminosidade(bd)
+    bd = rainNumbers(bd)
+    bd = delayNumbers(bd)
+    return bd
+
+bd=tratar_dados(bd)
 
 #Dados
-dadosTreino = pd.read_csv("training_data.csv")
-dadosTeste = pd.read_csv("test_data.csv")
-dadosTreino["record_date"] = pd.to_datetime(dadosTreino["record_date"])
-dadosTreino = dadosTreino.sort_values(by='record_date', ascending=True)
-dadosTreino
+bd = bd.sort_values(by='data', ascending=True)
+bd
 # Definir o modelo
 seq_length = 7 # number of days to use for prediction
-n_features = dadosTreino.shape[1] 
+n_features = bd.shape[1] 
 n_classes = 1
 
 model = tf.keras.Sequential([
@@ -33,7 +36,7 @@ model = tf.keras.Sequential([
 ])
 # Compilar o modelo
 model.compile(loss='mean_squared_error', optimizer='adam')
-model.fit(x=dadosTeste[:-1], y=dadosTeste[1:], epochs=50, batch_size=32, verbose=1)
+model.fit(x=bd[:-1], y=bd[1:], epochs=50, batch_size=32, verbose=1)
 # Treinar o modelo
 # Fazer previsões
 predictions = model.predict(dadosTeste)
