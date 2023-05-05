@@ -5,6 +5,9 @@ from tensorflow.keras.layers import Dense, LSTM
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import importlib as imp
+import datacleaner
+imp.reload(datacleaner)
 
 from datacleaner import *
 
@@ -18,7 +21,7 @@ bd = pd.read_csv(r"training_data.csv")
 def tratar_dados(bd):
     bd = ordernar(bd)
     bd = RoadsCleaner(bd)
-    bd = data(bd)
+    #bd = data(bd)
     bd = valores_em_falta(bd)
     bd = eliminar(bd)
     bd = incidentsNumbers(bd)
@@ -33,8 +36,8 @@ def tratar_dados(bd):
 bd,indice_treino,indice_val,escala=tratar_dados(bd)
 
 #Dados
-bd = bd.sort_values(by='data', ascending=True)
 bd
+serie(bd,"incidents")
 # Definir o modelo
 seq_length = 7 # number of days to use for prediction
 n_features = bd.shape[1] 

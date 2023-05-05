@@ -11,7 +11,7 @@ bd = pd.read_csv(r"training_data.csv")
 def ordernar(bd):
     bd["record_date"] = pd.to_datetime(bd["record_date"])
     bd = bd.sort_values(by='record_date', ascending=True)
-    bd["record_date"] = str(bd["record_date"])
+    #bd["record_date"] = bd["record_date"].astype(str)
     return bd
 
 def RoadsCleaner(bd):
@@ -46,8 +46,10 @@ def RoadsCleaner(bd):
 def data(bd):
     data=[]
     hora=[]
+
     for i in bd['record_date']:
-        data_e_hora=datetime.datetime.strptime(i, '%Y-%m-%d %H:%M')
+        data_e_hora=datetime.datetime.strptime(i, '%Y-%m-%d %H:%M:00')
+        print(data_e_hora)
         data.append(data_e_hora.date())
         hora.append(data_e_hora.time())
     bd["data"] = data
@@ -64,7 +66,7 @@ def eliminar(bd):
     bd.pop("city_name")
     bd.pop("avg_precipitation")
     bd.pop("affected_roads")
-    bd.pop("record_date")
+    #bd.pop("record_date")
     return bd
 
 
@@ -100,13 +102,16 @@ def removeOutlier(bd):
 
 
 def serie(bd, coluna):
-    plt.plot(bd["data"],bd[coluna])
+    plt.plot(bd["record_date"],bd[coluna])
     plt.show()
 
 def data_normalization(bd, norm_range=(-1, 1)):
-    numericBd=bd.iloc[:,0:-3]
+    temp = bd["record_date"]
+    bd.pop("record_date")
+    bd["record_date"]=temp
+    numericBd=bd.iloc[:,0:-2]
     scaler = MinMaxScaler(feature_range=norm_range)
     numericBd = scaler.fit_transform(numericBd.values)
-    bd.iloc[:,0:-3] = numericBd
+    bd.iloc[:,0:-2] = numericBd
     return scaler,bd
 
