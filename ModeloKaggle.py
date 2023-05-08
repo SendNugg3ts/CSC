@@ -38,6 +38,11 @@ bd,indice_treino,indice_val,escala=tratar_dados(bd)
 #Dados
 bd
 serie(bd,"incidents")
+newBd = bd[["incidents","record_date"]]
+
+train, test = newBd[0:-600], newBd[-600:]
+
+
 # Definir o modelo
 seq_length = 7 # number of days to use for prediction
 n_features = bd.shape[1] 
