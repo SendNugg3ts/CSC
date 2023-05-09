@@ -115,3 +115,11 @@ def data_normalization(bd, norm_range=(-1, 1)):
     bd.iloc[:,0:-2] = numericBd
     return scaler,bd
 
+def datetoUnix(bd):
+    listaDatas = []
+    for data in bd["record_date"]:
+        data =  datetime.datetime.strptime(str(data), '%Y-%m-%d %H:%M:00').timestamp()
+        listaDatas.append(data)
+    bd["record_date"] = listaDatas
+
+    return bd

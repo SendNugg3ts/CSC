@@ -7,12 +7,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 import importlib as imp
 import datacleaner
+import datetime
 imp.reload(datacleaner)
 
 from datacleaner import *
 
-
-tf.random.set_seed(1)
 np.random.seed(1)
 tf.keras.backend.clear_session()
 
@@ -42,26 +41,6 @@ newBd = bd[["incidents","record_date"]]
 
 train, test = newBd[0:-600], newBd[-600:]
 
+temp = bd["incidents"]
+temp.plot()
 
-# Definir o modelo
-seq_length = 7 # number of days to use for prediction
-n_features = bd.shape[1] 
-n_classes = 1
-
-
-
-model_LSTM = tf.keras.Sequential([
-    tf.keras.layers.LSTM(64, input_shape=(seq_length, n_features),stateful=True),
-    tf.keras.layers.Dropout(0.2),
-    tf.keras.layers.Dense(n_classes)
-])
-# Compilar o modelo
-model.compile(loss='mean_squared_error', optimizer='adam')
-
-for i in range(len(dados_treino)):
-    model.fit(x=bd[:-1], y=bd[1:], epochs=50, batch_size=32, verbose=1)
-    model.reset_states()
-    
-# Treinar o modelo
-# Fazer previsões
-predictions = model.predict(dadosTeste)
