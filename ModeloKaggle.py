@@ -44,3 +44,4 @@ train, test = newBd[0:-600], newBd[-600:]
 temp = bd["incidents"]
 temp.plot()
 
+temp
