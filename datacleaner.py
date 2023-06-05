@@ -106,6 +106,9 @@ def serie(bd, coluna):
     plt.show()
 
 def data_normalization(bd, norm_range=(-1, 1)):
+    temp = bd["record_date"]
+    bd.pop("record_date")
+    bd["record_date"]=temp
     numericBd=bd.iloc[:,0:-2]
     scaler = MinMaxScaler(feature_range=norm_range)
     scaler.fit(numericBd.values)
@@ -113,11 +116,3 @@ def data_normalization(bd, norm_range=(-1, 1)):
     bd.iloc[:,0:-2] = numericBd
     return scaler,bd
 
-def datetoUnix(bd):
-    listaDatas = []
-    for data in bd["record_date"]:
-        data =  datetime.datetime.strptime(str(data), '%Y-%m-%d %H:%M:00').timestamp()
-        listaDatas.append(data)
-    bd["record_date"] = listaDatas
-
-    return bd
