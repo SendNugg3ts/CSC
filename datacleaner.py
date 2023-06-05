@@ -111,6 +111,7 @@ def data_normalization(bd, norm_range=(-1, 1)):
     bd["record_date"]=temp
     numericBd=bd.iloc[:,0:-2]
     scaler = MinMaxScaler(feature_range=norm_range)
+    scaler.fit(numericBd.values)
     numericBd = scaler.fit_transform(numericBd.values)
     bd.iloc[:,0:-2] = numericBd
     return scaler,bd
