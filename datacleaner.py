@@ -106,9 +106,6 @@ def serie(bd, coluna):
     plt.show()
 
 def data_normalization(bd, norm_range=(-1, 1)):
-    temp = bd["record_date"]
-    bd.pop("record_date")
-    bd["record_date"]=temp
     numericBd=bd.iloc[:,0:-2]
     scaler = MinMaxScaler(feature_range=norm_range)
     scaler.fit(numericBd.values)
