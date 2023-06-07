@@ -1,2 +1,2 @@
 # CSC
-Repositório para a UC Classificadores e Sistemas Conexionistas
+Repositório para o trabalho de redes neuronais para previs UC Classificadores e Sistemas Conexionistas
